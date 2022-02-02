@@ -13,5 +13,5 @@ jobs:
           uses: Azure/pipelines@v1
           with:
             azure-devops-project-url: 'https://dev.azure.com/sk4red/PipeLineTest'
-            azure-pipeline-name: 'Dev Release PipeLine'
+            azure-pipeline-name: 'ReleasePipeLine'
             azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}'
