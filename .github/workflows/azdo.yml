@@ -2,7 +2,7 @@ name: AzDo
 
 on:
   release:
-    types: [published,workflow_dispatch]
+    types: [workflow_dispatch]
 
 jobs:
     build:
