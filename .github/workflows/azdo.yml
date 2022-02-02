@@ -1,8 +1,8 @@
-name: Trigger AzDo Pipeline
+name: AzDo
 
 on:
   release:
-    types: [published]
+    types: [published,workflow_dispatch]
 
 jobs:
     build:
