@@ -1,4 +1,4 @@
-name: CI
+name: Trigger AzDo Pipeline
 
 on:
   release:
@@ -12,6 +12,6 @@ jobs:
         - name: Azure Pipelines Action
           uses: Azure/pipelines@v1
           with:
-            azure-devops-project-url: https://dev.azure.com/sk4red/PipeLineTest
+            azure-devops-project-url: 'https://dev.azure.com/sk4red/PipeLineTest'
             azure-pipeline-name: 'Dev Release PipeLine'
-            azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+            azure-devops-token: '${{ secrets.AZURE_DEVOPS_TOKEN }}
