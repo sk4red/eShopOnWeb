@@ -24,8 +24,8 @@ jobs:
   build:
     runs-on: windows-latest
     outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
-      Version: ${{ steps.gitversion.outputs.nuGetVersionV2 }} 
-      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}   
+      Version: ${{ steps.gitversion.outputs.majorMinorPatch }} 
+      
     steps:
     - uses: actions/checkout@v2
       with:
@@ -71,7 +71,9 @@ jobs:
         include-prerelease: ${{ env.dotNetSDKIncludePrerelease }}   
     #Publish web and web service projects
     - name: DotNet Publish Web Site
-      run: dotnet publish src/Web/Web.csproj --configuration ${{ env.dotNetConfiguration }} -p:Version=${{ needs.build.outputs.Version }} --output ${{ github.workspace }}/web --runtime ${{env.runtimeTarget}} --self-contained false # --self-contained true --runtime ${{env.runtimeTarget}}
+      run: |
+        echo "MajorMinorPatch: ${{ needs.build.outputs.Version }}"
+        dotnet publish src/Web/Web.csproj --configuration ${{ env.dotNetConfiguration }} -p:Version=${{ needs.build.outputs.Version }} --output ${{ github.workspace }}/web --runtime ${{env.runtimeTarget}} --self-contained false # --self-contained true --runtime ${{env.runtimeTarget}}
     
     #Publish functional tests
     - name: DotNet build functional tests
