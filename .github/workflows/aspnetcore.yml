@@ -72,25 +72,14 @@ jobs:
     #Publish web and web service projects
     - name: DotNet Publish Web Site
       run: dotnet publish src/Web/Web.csproj --configuration ${{ env.dotNetConfiguration }} -p:Version=${{ needs.build.outputs.Version }} --output ${{ github.workspace }}/web --runtime ${{env.runtimeTarget}} 
-    
-    #Publish functional tests
-    - name: DotNet build functional tests
-      run: dotnet build tests/FunctionalTests/FunctionalTests.csproj --configuration ${{ env.dotNetConfiguration }} --runtime ${{env.runtimeTarget}} #--self-contained false #--self-contained true --runtime ${{env.runtimeTarget}}
-    - name: DotNet Publish functional tests
-      run: dotnet publish tests/FunctionalTests/FunctionalTests.csproj --configuration ${{ env.dotNetConfiguration }} --output ${{ github.workspace }}/functionalTests --runtime ${{env.runtimeTarget}} --self-contained false # --self-contained true --runtime ${{env.runtimeTarget}}
-
-    
+        
     #Publish build artifacts to GitHub
     - name: Upload website build artifacts back to GitHub
       uses: actions/upload-artifact@master
       with:
         name: webapp
         path: ${{ github.workspace }}/web
-    - name: Upload function test build artifacts back to GitHub
-      uses: actions/upload-artifact@master
-      with:
-        name: functionaltests
-        path: ${{ github.workspace }}/functionalTests
+
 
 
   
