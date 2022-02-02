@@ -59,13 +59,19 @@ jobs:
       run: dotnet test ./eShopOnWeb.sln --configuration Release   
 
   release:
-    name: Release
-    needs: build            
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Dotnet for use with actions
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.dotNetSDKVersion }}
+        include-prerelease: ${{ env.dotNetSDKIncludePrerelease }}   
     #Publish web and web service projects
     - name: DotNet Publish Web Site
       run: dotnet publish src/Web/Web.csproj --configuration ${{ env.dotNetConfiguration }} -p:Version=${{ steps.gitversion.outputs.nuGetVersionV2 }} --output ${{ github.workspace }}/web --runtime ${{env.runtimeTarget}} --self-contained false # --self-contained true --runtime ${{env.runtimeTarget}}
     
-
     #Publish functional tests
     - name: DotNet build functional tests
       run: dotnet build tests/FunctionalTests/FunctionalTests.csproj --configuration ${{ env.dotNetConfiguration }} --runtime ${{env.runtimeTarget}} #--self-contained false #--self-contained true --runtime ${{env.runtimeTarget}}
