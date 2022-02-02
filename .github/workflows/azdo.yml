@@ -1,6 +1,8 @@
 name: AzDo
 
-on: [workflow_dispatch]
+on:
+  release:
+    types: [published]
 
 jobs:
     build:
