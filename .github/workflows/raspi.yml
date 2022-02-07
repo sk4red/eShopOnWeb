@@ -3,8 +3,12 @@ on: [workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
+    - name: Azure Public IP
+      run: |
+        IP=($(curl -s http://ipinfo.io/json | jq '.ip' | sed -e 's/^"//' -e 's/"$//'))
+        echo "This GitHub Workflow agent public IP is: $IP"
     - uses: actions/checkout@v2
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
